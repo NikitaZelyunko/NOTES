@@ -1,6 +1,10 @@
-<mat-card class="example-card">
+<!-- <mat-card *ngFor="let note of notes" class="example-card">
     <mat-card-header>
-        <mat-card-title>{{note.title}}</mat-card-title>
+        <mat-card-title>
+            <p>
+                {{note.title}}
+            </p>
+        </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <p>
@@ -9,4 +13,79 @@
     </mat-card-content>
     <mat-card-actions>
     </mat-card-actions>
-</mat-card>
+</mat-card>-->
+<!--<ng-masonry-grid [options]="{ transitionDuration: '0.8s', gutter: 5 }">
+    <ng-masonry-grid-item *ngFor="let note of notes">
+        <div class="note_header">
+            {{note.title}}
+        </div>
+        <div class="note_body">
+            {{note.body}}
+        </div>
+    </ng-masonry-grid-item>
+</ng-masonry-grid> -->
+<!-- <masonry class="brick_wrapper" [options]="options">
+    <masonry-brick class="brick" *ngFor="let note of notes">
+        <div class="note_header">
+            {{note.title}}
+        </div>
+        <div class="note_body">
+            {{note.body}}
+        </div>
+    </masonry-brick>
+</masonry> -->
+
+<!-- <div class="note" *ngFor="let note of notes">
+    <div class="note_header">
+        {{note.title}}
+    </div>
+    <div class="note_body">
+        {{note.body}}
+    </div>
+</div>
+        <div class="note_header">
+            {{note.title}}
+        </div>
+        <div class="note_body">
+            {{note.body}}
+        </div>
+    
+    <div class="wrapper_notes" [dndList] [dndModel]="notes">
+    <div class="note" *ngFor="let note of notes" [dndType]="'note'" (dndMoved)="print()" [dndDraggable] [dndObject]="note">
+        {{note.title}}
+    </div>
+</div>
+
+<div class="dndPlaceholder col-md-12" #placeholder></div>
+<div class="wrapper_notes" [dndList] [dndModel]="notes" [dndPlaceholder]="placeholder">
+    <div class="note" *ngFor="let note of notes" [dndType]="'note'" (dndMoved)="removeItem(note,notes)" [dndDraggable] [dndObject]="note">
+        <div class="note_header">
+            {{note.title}}
+        </div>
+        <div class="note_body ">
+            {{note.body}}
+        </div>
+    </div>
+
+
+    <div class="col-md-6" [dndList] [dndPlaceholder]="placeholder" [dndModel]="notes">
+    <div *ngFor="let item of notes" class="col-md-12" [dndType]="'item'" (dndMoved)="removeItem(item, notes)" [dndDraggable] [dndObject]="item">{{item.title}}</div>
+</div>
+-->
+<div class="dndPlaceholder" #placeholder></div>
+<div class="wrapper_notes" [dndList] [dndPlaceholder]="placeholder" [dndModel]="notes">
+
+    <div *ngFor="let note of notes" class="note" [ngStyle]="{'background-color': note.color}" [dndType]="'note'" (dndMoved)="removeNote(note, notes)" [dndDraggable] [dndObject]="note" (click)="show_note(note)">
+        <div class="note_content">
+            <div class="note_header">
+                {{note.title}}
+            </div>
+            <div class="note_body ">
+                {{note.body}}
+            </div>
+        </div>
+        <div class="note_bar">
+        </div>
+    </div>
+
+</div>

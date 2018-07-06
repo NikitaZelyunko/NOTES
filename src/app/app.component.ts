@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-enum types {TEXT, LIST};
+enum types {TEXT, LIST}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
