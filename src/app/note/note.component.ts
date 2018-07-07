@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 import { Note } from '../note';
 
 import {NoteStorageService} from '../note-storage.service';
+import { NoteOrderService } from '../note-order.service';
+import { consumeBinding } from '@angular/core/src/render3/instructions';
 //import {MatCardModule} from '@angular/material/card';
 
 
@@ -14,6 +16,7 @@ import {NoteStorageService} from '../note-storage.service';
   styleUrls: ['./note.component.css']
 })
 export class NoteComponent implements OnInit {
+  rows_count = 10;
   enter_key_up: KeyboardEvent = new KeyboardEvent(
     'keyup',
     {
@@ -27,9 +30,13 @@ export class NoteComponent implements OnInit {
   note: Note;
   text_changes_note: Note;
   par_header: HTMLParagraphElement;
+  note_items_visible = {
+    'default_note_header': false,
+    'default_note_body' : false
+  };
   menu_items_visible = {
     'changer_color_visible': false,
-    'menu_bar_visible': true
+    'menu_bar_visible': true,
   };
   changer_color_visible = false;
   menu_bar_visible = false;
@@ -50,30 +57,44 @@ export class NoteComponent implements OnInit {
 
   constructor(
     private noteStorageService: NoteStorageService,
+    private noteOrderService: NoteOrderService,
     private route: ActivatedRoute,
     private location: Location) {
   }
   ngOnInit() {
     this.getNote();
-  }
-  changeTitle() {
-    console.log('hello');
-  }
-  keyUpEnter(event: KeyboardEvent, field: string) {
-    if ( event.type === 'keyup') {
-      if (event.key === 'Enter') {
-        //console.log(this.show_note[field]);
-        //console.log(event.currentTarget['innerText']);
-        //this.commit_changes_note[field] = event.currentTarget['innerText'];
-      }
+    if (this.show_note.title === '') {
+      this.note_items_visible['default_note_header'] = true;
+    }
+    if (this.show_note.body === '') {
+      this.note_items_visible['default_note_body'] = true;
     }
   }
   getNote(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.show_note = this.noteStorageService.get_note(id);
     this.commit_changes_note = Note.copyNote(this.show_note);
-    console.log('From base', this.show_note);
   }
+  /*
+  showDefaultNoteHeader() {
+    if (this.show_note.title === '') {
+      this.note_items_visible['default_note_header'] = true;
+    }
+  }
+  hideDefaultNoteHeader() {
+    this.note_items_visible['default_note_header'] = false;
+    document.getElementById('note_header_1').focus();
+  }
+  showDefaultNoteBody() {
+    if (this.show_note.body === '') {
+      this.note_items_visible['default_note_body'] = true;
+    }
+  }
+  hideDefaultNoteBody() {
+    this.note_items_visible['default_note_body'] = false;
+    document.getElementById('note_body_1').focus();
+  }
+  */
   showMenuBar() {
     let keys = Object.keys(this.menu_items_visible);
     keys.splice(keys.indexOf('menu_bar_visible'), 1);
@@ -99,10 +120,10 @@ export class NoteComponent implements OnInit {
     this.commit_changes_note.color = color;
   }
   archivateUnarchivate() {
-    if (this.note.isArchive()) {
-      this.note.toNew();
+    if (this.commit_changes_note.isArchive()) {
+      this.commit_changes_note.toNew();
     }
-    this.note.toArchive();
+    this.commit_changes_note.toArchive();
   }
   fixedUnfixed() {
     if (this.note.isFixed()) {
@@ -111,26 +132,13 @@ export class NoteComponent implements OnInit {
     this.note.toFixed();
   }
   commitChanges() {
-    //console.log(document.getElementsByClassName('note_header')[0]);
-    let str = document.getElementsByClassName('note_header')[0]['innerText'];
-    console.log('innerText');
-    for ( let i = 0; i < str.length; i++) {
-      console.log(str[i].charCodeAt(0));
-    }
-    this.commit_changes_note.title = document.getElementsByClassName('note_header')[0]['innerText'];
-    this.commit_changes_note.body = document.getElementsByClassName('note_body')[0]['innerText'];
-    //console.log('before');
-    //console.log(this.commit_changes_note.title);
-    //console.log(this.commit_changes_note.body);
-    //document.getElementsByClassName('note_header')[0].dispatchEvent(this.enter_key_up);
-    //document.getElementsByClassName('note_body')[0].dispatchEvent(this.enter_key_up);
+    this.commit_changes_note.title = document.getElementsByClassName('note_header')[0]['value'];
+    this.commit_changes_note.body = document.getElementsByClassName('note_body')[0]['value'];
     this.commit_changes_note.title = this.deleteEndEnters(this.commit_changes_note.title);
     this.commit_changes_note.body = this.deleteEndEnters(this.commit_changes_note.body);
-    //console.log('after');
-    //console.log(this.commit_changes_note.title);
-    //console.log(this.commit_changes_note.body);
-    this.noteStorageService.reset_note(this.commit_changes_note);
-    //this.location.back();
+    this.noteStorageService.update_or_create_note(this.commit_changes_note);
+    this.noteOrderService.changeType(this.commit_changes_note.getId());
+    this.location.back();
   }
 
   private setAllValues(obj: object, keys: Array<string>, set_value: any) {

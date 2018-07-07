@@ -18,10 +18,39 @@
         div.menu {
             position: fixed;
             top: 70px;
+            left: -200px;
             width: 200px;
             background-color: red;
             height: 100%;
             display: inline-block;
+        }
+        
+        div.show_menu_button {
+            position: relative;
+            top: 0;
+            width: 60px;
+            height: 100%;
+        }
+        
+        div.menu_image {
+            position: absolute;
+            top: calc(50% - 20px);
+            left: calc(50% - 20px);
+            width: 40px;
+            height: 40px;
+        }
+        
+        img.menu_image {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 30px;
+            opacity: 0.5;
+        }
+        
+        img.menu_image:hover {
+            cursor: pointer;
+            opacity: 1;
         }
         
          :host {
@@ -38,7 +67,7 @@
             height: 100%;
             width: calc(100% - 200px);
             vertical-align: top;
-            overflow: scroll;
+            overflow: auto;
         }
         
         .notes {

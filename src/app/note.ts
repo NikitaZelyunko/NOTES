@@ -2,8 +2,7 @@ enum body_types {TEXT= 0, LIST= 1}
 enum note_types {NEW= 0, FIXED= 1, ARCHIVE= 2}
 
 export class Note {
-    id;
-    order_num;
+    private id;
     title;
     note_type;
     body_type;
@@ -13,7 +12,6 @@ export class Note {
     constructor
     (
         id: number,
-        order_num: number,
         title: string,
         note_type: number,
         body_type: number,
@@ -21,17 +19,14 @@ export class Note {
         color: string
     ) {
         this.id = id;
-        this.order_num = order_num;
         this.title = title;
         this.note_type = note_type;
         this.body_type = body_type;
         this.body = body;
         this.color = color;
     }
-
     static fromJSON(item: Object ): Note {
         let id = 0;
-        let order_num = 0;
         let title = '';
         let note_type: note_types = note_types.NEW;
         let body_type: body_types = body_types.TEXT;
@@ -39,9 +34,6 @@ export class Note {
         let color = '#FFFFFF';
         if (item['id'] !== undefined) {
             id = item['id'];
-          }
-        if (item['order_num'] !== undefined) {
-            order_num = item['order_num'];
           }
         if (item['title'] !== undefined) {
           title = item['title'];
@@ -64,13 +56,12 @@ export class Note {
                 color = item['color'];
             }
         }
-        return new Note(id, order_num, title, note_type, body_type, body, color);
+        return new Note(id, title, note_type, body_type, body, color);
     }
 
     static copyNote(note: Note) {
         return new Note(
         note.id,
-        note.order_num,
         note.title,
         note.note_type,
         note.body_type,
@@ -80,11 +71,13 @@ export class Note {
     }
 
     static default_instance(): Note {
-        return new Note(-1, 0, '', 0, 0, '', '#FFFFFF');
+        return new Note(-1, '', 0, 0, '', '#FFFFFF');
+    }
+    getId(): number {
+        return this.id;
     }
     isDefault(): boolean {
         if ( this.id === -1 ) {
-            if ( this.order_num === 0) {
                 if ( this.title === '' ) {
                     if ( this.note_type === 0 ) {
                         if ( this.body_type === 0 ) {
@@ -96,7 +89,6 @@ export class Note {
                         }
                     }
                 }
-            }
         }
         return false;
     }
@@ -130,7 +122,6 @@ export class Note {
     toJSON(): Object {
         return {
             id: this.id,
-            order_num: this.order_num,
             title: this.title,
             note_type: this.note_type,
             body_type: this.body_type,

@@ -12,14 +12,24 @@
             <div role="textbox" contenteditable="true" class="note_header" placeholder="title" [(ngModel)]="note.title">
             </div>
         
-                <div role="textbox" aria-multiline="true" contenteditable="true" class="note_header" placeholder="title" (keypress)="restrictNumberInput($event)">-->
+                <div role="textbox" aria-multiline="true" contenteditable="true" class="note_header" placeholder="title" (keypress)="restrictNumberInput($event)">
+                                <p id="note_header_1" role="textbox" maxlength="10" contenteditable="true" class="note_header" placeholder="Title" (focus)="hideDefaultNoteHeader()" (blur)="showDefaultNoteHeader()" [(ngModel)]="show_note.title">
+            </p>
+        
+                    <textarea [ngStyle]="{'background-color': show_note.color}" [(ngModel)]="show_note.title" (ngModelChange)="changeTitle($event)" id="note_header_1" role="textbox" maxlength="10" contenteditable="true" class="note_header" placeholder="Title" (focus)="hideDefaultNoteHeader()"
+                (blur)="showDefaultNoteHeader()">
+                </textarea>-->
 
 <div *ngIf="show_note" class="note" [ngStyle]="{'background-color': show_note.color}" (mouseleave)="hideChangerColor();">
     <div class="note_content">
         <div class="wrapper_for_hidden_scroll">
-            <p role="textbox" contenteditable="true" class="note_header" placeholder="Title" (change)="changeTitle()" (keyup)="keyUpEnter($event, 'title')" [(ngModel)]="show_note.title"></p>
-            <p role="textbox" contenteditable="true" class="note_header" placeholder="Title" (change)="changeTitle()" (keyup)="keyUpEnter($event, 'title')" [(ngModel)]="show_note.title"></p>
-            <p role="textbox" contenteditable="true" class="note_body" placeholder="body" (keyup)="keyUpEnter($event, 'body')" [(ngModel)]="show_note.body"></p>
+            <textarea rows="6" [ngStyle]="{'background-color': show_note.color}" [(ngModel)]="show_note.title" class="note_header" placeholder="Title">
+            </textarea>
+        </div>
+
+        <div class="wrapper_for_hidden_scroll">
+            <textarea [ngStyle]="{'background-color': show_note.color}" rows="10" [(ngModel)]="show_note.body" class="note_body" placeholder="Note">
+                </textarea>
         </div>
     </div>
     <div class="menu_bar">

@@ -18,7 +18,8 @@ const NOTE_ROUTE_PREFIX = 'note';
 })
 export class NewNotesComponent implements OnInit {
 
-  notes: any[] = [];
+  notes: any = [];
+  order: any = [];
 
   constructor(
     private noteStorageService: NoteStorageService,
@@ -33,30 +34,29 @@ export class NewNotesComponent implements OnInit {
   }
   private update_order_notes() {
     for (let i = 0; i < this.notes.length; i++) {
-      this.notes[i].order_num = i;
-      this.noteStorageService.reset_note(Note.fromJSON(this.notes[i]));
+      //this.notes[i].order_num = i;
+      this.noteStorageService.update_or_create_note(Note.fromJSON(this.notes[i]));
     }
   }
 
   ngOnInit() {
     //this.noteStorageService.clear_all();
+    //this.noteOrderService.clear_all();
     //this.generate_notes(10);
     this.get_new_notes();
   }
   show_note(note: object) {
-    console.log([NOTE_ROUTE_PREFIX + ':' + note['id'].toString()]);
     this.routing.navigate([NOTE_ROUTE_PREFIX + '/' + note['id'].toString()]);
   }
   get_new_notes() {
-    let len = this.noteStorageService.get_count_notes();
-    let keys = this.noteStorageService.get_id_notes(len);
+    let arr_id = this.noteOrderService.get_order_list(0);
     this.notes = [];
     let note;
-    for (let i = 0; i < len; i++) {
-      note = this.noteStorageService.get_note(parseInt(keys[i], 10)).toJSON();
+    for (let i = 0; i < arr_id.length; i++) {
+      note = this.noteStorageService.get_note(arr_id[i]).toJSON();
       if (note.note_type === 0) {
-        console.log(note);
-        this.notes[note['order_num']] = note;
+        note.order_num = i;
+        this.notes[i] = note;
       }
     }
   }
@@ -82,15 +82,17 @@ export class NewNotesComponent implements OnInit {
       body = this.generate_string(start_symbol, max_step, len);
       note = new Note(
         i,
-        i,
         title,
         note_type,
         body_type,
         body,
         color);
-      this.noteStorageService.set_note(note);
+      //console.log(note.getId());
+      //console.log('after', this.noteOrderService.get_order_list(note.note_type));
+      this.noteStorageService.create_note(note);
+      this.noteOrderService.setToEnd(note.getId(), note.note_type);
+      //console.log('before', this.noteOrderService.get_order_list(note.note_type));
     }
-
   }
   generate_string(start_symbol: number, max_step: number, len: number): string {
     let code_arr: Array<number> = [];

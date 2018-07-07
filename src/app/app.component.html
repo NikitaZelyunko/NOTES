@@ -1,10 +1,14 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="header">
+    <div class="show_menu_button">
+        <div class="menu_image">
+            <img class="menu_image" src="/assets/menu.svg" (click)="showMenu($event)">
+        </div>
+    </div>
 </div>
-<div class="wrapper">
-    <div class="menu"></div>
-    <div class="content">
+<div class=" wrapper ">
+    <div class="menu " [@selected]="menu_show"></div>
+    <div class="content ">
         <router-outlet></router-outlet>
-
     </div>
 </div>
