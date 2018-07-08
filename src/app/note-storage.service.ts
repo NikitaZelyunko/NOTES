@@ -93,7 +93,7 @@ export class NoteStorageService {
     if (id === -1) {
       id = this.get_count_notes();
     }
-    let note = new Note(
+    note = new Note(
       id,
       note.title,
       note.note_type,
