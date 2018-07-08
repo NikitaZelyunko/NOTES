@@ -9,6 +9,11 @@
 <div class=" wrapper ">
     <div class="menu " [@selected]="menu_show"></div>
     <div class="content ">
-        <router-outlet></router-outlet>
+        <div class="note_add">
+            <app-note-add class="note_create"></app-note-add>
+        </div>
+        <div class="notes">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>

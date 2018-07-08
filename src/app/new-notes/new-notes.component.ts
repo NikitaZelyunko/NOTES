@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { NoteStorageService } from '../note-storage.service';
 import { NoteOrderService } from '../note-order.service';
 import { Note } from '../note';
 import { Router } from '@angular/router';
+
 //import {NoteComponent} from '../note/note.component';
 
 const NOTE_ROUTE_PREFIX = 'note';
@@ -11,10 +12,7 @@ const NOTE_ROUTE_PREFIX = 'note';
   selector: 'app-new-notes',
   templateUrl: './new-notes.component.html',
   styleUrls: ['./new-notes.component.css'],
-  providers: [
-    NoteStorageService,
-    NoteOrderService
-  ]
+
 })
 export class NewNotesComponent implements OnInit {
 
@@ -34,15 +32,32 @@ export class NewNotesComponent implements OnInit {
   }
   private update_order_notes() {
     for (let i = 0; i < this.notes.length; i++) {
-      //this.notes[i].order_num = i;
       this.noteStorageService.update_or_create_note(Note.fromJSON(this.notes[i]));
     }
   }
+  /*
+  addNote(): (id: number) => void {
+    let comp = this;
+    function add_note(id: number): void {
+      console.log('id', id);
+      let order_num = comp.noteOrderService.getOrder(id);
+      let note = comp.noteStorageService.get_note(id);
+      comp.notes.splice(order_num, 0, note);
+    }
+    return add_note;
+  }
+  */
+
 
   ngOnInit() {
     //this.noteStorageService.clear_all();
     //this.noteOrderService.clear_all();
     //this.generate_notes(10);
+    this.noteStorageService.eventEmitter.
+      subscribe((id: number) => {
+      let note = this.noteStorageService.get_note(id);
+      this.notes.splice(0, 0, note);
+    });
     this.get_new_notes();
   }
   show_note(note: object) {

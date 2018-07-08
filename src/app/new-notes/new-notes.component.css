@@ -1,12 +1,13 @@
 div.wrapper_notes {
     position: relative;
-    width: calc( (240px + 40px + 10px * 2) * 5 + 100px);
+    width: calc( (240px + 40px) * 5);
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: flex-start;
     align-content: flex-start;
     height: 100%;
+    left: calc(50% - (700px + 100px));
     /*width: 1200px;
     display: grid;
     grid-template-columns: 240px 240px 240px 240px 240px;
@@ -25,7 +26,7 @@ div.note {
     width: 240px;
     word-wrap: break-word;
     margin: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
 }
 
 div.note_end {

@@ -124,6 +124,7 @@ export class NoteOrderService {
       return -1;
     }
     let list_order = this.get_order_list(type);
+
     return list_order.indexOf(id);
   }
   private getType(id: number): note_types {

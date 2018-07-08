@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter} from '@angular/core';
 import { trigger, state, style, animate, transition, group } from '@angular/animations';
 
-enum types {TEXT, LIST}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -29,7 +28,10 @@ enum types {TEXT, LIST}
 export class AppComponent {
   title = 'app';
   menu_show = 'menu_hide';
+  @Output() createNote: EventEmitter<number> = new EventEmitter<number>();
+
 showMenu(event: MouseEvent) {
+  this.createNote.emit(1);
   if (this.menu_show === 'selected') {
     this.menu_show = 'menu_hide';
   }

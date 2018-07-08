@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Note } from './note';
-import { NoteOrderService} from './note-order.service';
 const PREF_KEY = 'note';
 
 @Injectable({
@@ -9,10 +8,12 @@ const PREF_KEY = 'note';
 export class NoteStorageService {
 
   private storage: Storage;
+  eventEmitter: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() {
     this.storage = window.localStorage;
   }
+
   get_count_notes(): number {
     let res = 0;
     let len = this.storage.length;
@@ -60,6 +61,7 @@ export class NoteStorageService {
   create_note(note: Note): boolean {
     if ( this.storage.getItem(PREF_KEY + note.getId().toString()) === null) {
       this.storage.setItem(PREF_KEY + note.getId().toString(), JSON.stringify(note));
+      this.eventEmitter.emit(note.getId());
       return true;
     }
     return false;
@@ -73,6 +75,36 @@ export class NoteStorageService {
       }
     }
     return creates;
+  }
+  create_note_auto_id(note: Note): number {
+    let str_id = this.get_id_notes(this.get_count_notes());
+    let int_id: Array<number> = [];
+    let id = -1;
+    for (let i = 0; i < str_id.length; i++) {
+      int_id[i] = parseInt(str_id[i], 10);
+    }
+    int_id.sort((n1, n2) => n1 - n2);
+    for (let i = 1; i < int_id.length; i++) {
+      if (int_id[i - 1] + 1 !== int_id[i]) {
+        id = int_id[i - 1] + 1;
+        break;
+      }
+    }
+    if (id === -1) {
+      id = this.get_count_notes();
+    }
+    let note = new Note(
+      id,
+      note.title,
+      note.note_type,
+      note.body_type,
+      note.body,
+      note.color
+    );
+    if (!this.create_note(note)) {
+      return -1;
+    }
+    return id;
   }
   update_or_create_note(note: Note) {
     this.storage.removeItem(PREF_KEY + note.getId().toString());

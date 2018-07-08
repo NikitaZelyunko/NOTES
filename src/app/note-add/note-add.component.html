@@ -1,0 +1,41 @@
+<div *ngIf="!selected" class="note">
+    <div class="note_content" [ngStyle]="{'margin': 0}">
+        <textarea rows="1" class="note_body" [(ngModel)]="note.body" placeholder="Create note" (focus)="selected = !selected">
+                </textarea>
+    </div>
+</div>
+<div id="creates_note" *ngIf="selected" class="note" [ngStyle]="{'background-color': note.color}" (mouseenter)="focusNoteBody()" (mouseleave)="hideChangerColor();">
+    <div class="note_content">
+        <div class="wrapper_for_hidden_scroll">
+            <textarea rows="6" [ngStyle]="{'background-color': note.color}" [(ngModel)]="note.title" class="note_header" placeholder="Title">
+            </textarea>
+        </div>
+
+        <div class="wrapper_for_hidden_scroll">
+            <textarea id="note_body_1" [ngStyle]="{'background-color': note.color}" rows="10" [(ngModel)]="note.body" class="note_body" placeholder="Note">
+                </textarea>
+        </div>
+    </div>
+
+
+    <div class="menu_content">
+        <div *ngIf="menu_items_visible['changer_color_visible']" class="changer_color" (mouseleave)="hideChangerColor()">
+            <div class="set_color" *ngFor="let color of availible_colors">
+                <div class="set_color_item" [ngStyle]="{'background-color': color}" (click)="changeColor(color)">
+                    <img *ngIf="note.color==color" class="checked_color " src="/assets/check.jpeg ">
+                </div>
+            </div>
+        </div>
+        <div class="note_bar" [style.visibility]="menu_items_visible['menu_bar_visible']==true?'visible':'hidden'">
+            <div class="menu_item " (mouseenter)="showChangerColor()">
+                <img src="/assets/palitra.svg">
+            </div>
+            <div class="menu_item " (mouseenter)="showMenuBar()" (click)="archivateUnarchivate()">
+                <img src="/assets/archive.svg">
+            </div>
+            <a class="save_button" (click)="commitChanges()">
+                <p>SAVE</p>
+            </a>
+        </div>
+    </div>
+</div>
