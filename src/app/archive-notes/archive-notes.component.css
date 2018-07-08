@@ -1,15 +1,3 @@
-.note_add {
-    width: calc( (240px + 40px + 10px * 2) * 5 + 100px);
-    position: relative;
-    padding: 20px 0 0 0;
-}
-
-.note_create {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
 div.wrapper_notes {
     position: relative;
     width: calc( (240px + 40px) * 5);
@@ -20,6 +8,7 @@ div.wrapper_notes {
     align-content: flex-start;
     height: 100%;
     left: calc(50% - (700px + 100px));
+    padding: 60px 0 0 0;
     /*width: 1200px;
     display: grid;
     grid-template-columns: 240px 240px 240px 240px 240px;

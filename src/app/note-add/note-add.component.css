@@ -172,6 +172,11 @@ div.menu_item:hover {
     cursor: pointer;
 }
 
+img.menu_icon {
+    width: 18px;
+    height: 18px;
+}
+
 a.save_button {
     display: inline-block;
     height: 18px;

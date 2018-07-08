@@ -4,8 +4,8 @@ import { ReturnStatement } from '@angular/compiler';
 import { Note } from './note';
 //import { Note } from './note';
 const PREF_KEY = 'order';
-const COUNT_TYPES = 3;
-enum note_types {NEW= 0, FIXED= 1, ARCHIVE= 2}
+const COUNT_TYPES = 4;
+enum note_types {NEW= 0, FIXED= 1, ARCHIVE= 2, TRASH= 3}
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +37,20 @@ export class NoteOrderService {
       order_list.splice(order_num, 0, id);
       this.update_order_list(order_list, type);
       return true;
+    }
+    return false;
+  }
+  //Работает только в рамках одного типа
+  changeOrderNum(id: number, type: note_types, order_num: number): boolean {
+    let old_order_num = this.getOrder(id);
+    if (old_order_num !== -1) {
+      let order_list = this.get_order_list(type);
+      if (order_num >= 0 && order_num <= order_list.length) {
+        order_list.splice(old_order_num, 1);
+        order_list.splice(order_num, 0, id);
+        this.update_order_list(order_list, type);
+        return true;
+      }
     }
     return false;
   }
@@ -72,6 +86,13 @@ export class NoteOrderService {
       return true;
     }
     return this.transferNote(id, old_type, note_types.FIXED, order_num);
+  }
+  toTrash(id: number, order_num: number): boolean {
+    let old_type = this.getType(id);
+    if (old_type === note_types.TRASH) {
+      return true;
+    }
+    return this.transferNote(id, old_type, note_types.TRASH, order_num);
   }
   private transferNote(id: number, old_type: note_types, new_type: note_types, order_num: number): boolean {
     if (note_types[new_type] === undefined) {

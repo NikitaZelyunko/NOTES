@@ -44,10 +44,13 @@
         <div class="menu_content">
             <div class="note_bar" [style.visibility]="menu_items_visible['menu_bar_visible']==true?'visible':'hidden'">
                 <div class="menu_item " (mouseenter)="showChangerColor()">
-                    <img src="/assets/palitra.svg">
+                    <img class="menu_icon" src="/assets/palitra.svg">
                 </div>
                 <div class="menu_item " (mouseenter)="showMenuBar()" (click)="archivateUnarchivate()">
-                    <img src="/assets/archive.svg">
+                    <img class="menu_icon" src="/assets/archive.svg">
+                </div>
+                <div class="menu_item " (mouseenter)="showMenuBar()" (click)="trashUntrash()">
+                    <img class="menu_icon" src="/assets/trash.svg">
                 </div>
                 <div class="space_between_bar_item" (mouseenter)="hideChangerColor()"></div>
                 <a class="save_button" (click)="commitChanges()">

@@ -16,6 +16,9 @@ import { AppRoutingModule } from './/app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { ContenteditableDirective } from 'ng-contenteditable';
 import { NoteAddComponent } from './note-add/note-add.component';
+import { ArchiveNotesComponent } from './archive-notes/archive-notes.component';
+import { TrashNotesComponent } from './trash-notes/trash-notes.component';
+import { FixedNotesComponent } from './fixed-notes/fixed-notes.component';
 
 
 @NgModule({
@@ -24,7 +27,10 @@ import { NoteAddComponent } from './note-add/note-add.component';
     NoteComponent,
     NewNotesComponent,
     ContenteditableDirective,
-    NoteAddComponent
+    NoteAddComponent,
+    ArchiveNotesComponent,
+    TrashNotesComponent,
+    FixedNotesComponent
   ],
   imports: [
     BrowserModule,

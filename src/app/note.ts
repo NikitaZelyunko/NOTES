@@ -1,5 +1,5 @@
 enum body_types {TEXT= 0, LIST= 1}
-enum note_types {NEW= 0, FIXED= 1, ARCHIVE= 2}
+enum note_types {NEW= 0, FIXED= 1, ARCHIVE= 2, TRASH= 3}
 
 export class Note {
     private id;
@@ -110,6 +110,12 @@ export class Note {
         }
         return false;
     }
+    isTrash(): boolean {
+        if (this.note_type === note_types.FIXED) {
+            return true;
+        }
+        return false;
+    }
     toArchive() {
         this.note_type = note_types.ARCHIVE;
     }
@@ -117,6 +123,9 @@ export class Note {
         this.note_type = note_types.NEW;
     }
     toFixed() {
+        this.note_type = note_types.FIXED;
+    }
+    toTrash() {
         this.note_type = note_types.FIXED;
     }
     toJSON(): Object {

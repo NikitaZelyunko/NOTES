@@ -14,16 +14,10 @@ export class NoteAddComponent implements OnInit {
   selected = false;
   first_show = true;
   note: Note = Note.default_instance();
-  note_items_visible = {
-    'default_note_header': false,
-    'default_note_body' : false
-  };
   menu_items_visible = {
     'changer_color_visible': false,
     'menu_bar_visible': true,
   };
-  changer_color_visible = false;
-  menu_bar_visible = false;
   availible_colors = [
   '#FFFFFF', //white
   '#FF0000', //red
@@ -43,15 +37,9 @@ export class NoteAddComponent implements OnInit {
     private noteStorageService: NoteStorageService,
     private noteOrderService: NoteOrderService,
     private route: Router) {
+      document.addEventListener('click', this.hideNote(this));
   }
   ngOnInit() {
-    if (this.note.title === '') {
-      this.note_items_visible['default_note_header'] = true;
-    }
-    if (this.note.body === '') {
-      this.note_items_visible['default_note_body'] = true;
-    }
-    document.addEventListener('click', this.hideNote(this));
     this.note = Note.default_instance();
   }
 
@@ -130,23 +118,34 @@ export class NoteAddComponent implements OnInit {
     this.note.color = color;
   }
   archivateUnarchivate() {
-    if (this.note.isArchive()) {
-      this.note.toNew();
+    if (this.note['note_type'] !== 2) {
+      this.note['note_type'] = 2;
     }
-    this.note.toArchive();
+    else {
+      this.note['note_type'] = 0;
+    }
   }
   fixedUnfixed() {
-    if (this.note.isFixed()) {
-      this.note.toNew();
+    if (this.note['note_type'] !== 1) {
+      this.note['note_type'] = 1;
     }
-    this.note.toFixed();
+    else {
+      this.note['note_type'] = 0;
+    }
+  }
+  trashUntrash() {
+    if (this.note['note_type'] !== 3) {
+      this.note['note_type'] = 3;
+    }
+    else {
+      this.note['note_type'] = 0;
+    }
   }
   commitChanges() {
     this.note.title = document.getElementsByClassName('note_header')[0]['value'];
     this.note.body = document.getElementsByClassName('note_body')[0]['value'];
     this.note.title = this.deleteEndEnters(this.note.title);
     this.note.body = this.deleteEndEnters(this.note.body);
-    this.noteStorageService.eventEmitter.subscribe((value) => console.log('add', value));
     let id = this.noteStorageService.create_note_auto_id(this.note);
     this.noteOrderService.setToBegin(id, this.note.note_type);
     this.selected = false;

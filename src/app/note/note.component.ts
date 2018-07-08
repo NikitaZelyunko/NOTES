@@ -120,17 +120,30 @@ export class NoteComponent implements OnInit {
     this.commit_changes_note.color = color;
   }
   archivateUnarchivate() {
-    if (this.commit_changes_note.isArchive()) {
-      this.commit_changes_note.toNew();
+    if (this.note['note_type'] !== 2) {
+      this.note['note_type'] = 2;
     }
-    this.commit_changes_note.toArchive();
+    else {
+      this.note['note_type'] = 0;
+    }
   }
   fixedUnfixed() {
-    if (this.note.isFixed()) {
-      this.note.toNew();
+    if (this.note['note_type'] !== 1) {
+      this.note['note_type'] = 1;
     }
-    this.note.toFixed();
+    else {
+      this.note['note_type'] = 0;
+    }
   }
+  trashUntrash() {
+    if (this.note['note_type'] !== 3) {
+      this.note['note_type'] = 3;
+    }
+    else {
+      this.note['note_type'] = 0;
+    }
+  }
+
   commitChanges() {
     this.commit_changes_note.title = document.getElementsByClassName('note_header')[0]['value'];
     this.commit_changes_note.body = document.getElementsByClassName('note_body')[0]['value'];

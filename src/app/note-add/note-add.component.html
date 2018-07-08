@@ -1,6 +1,6 @@
 <div *ngIf="!selected" class="note">
     <div class="note_content" [ngStyle]="{'margin': 0}">
-        <textarea rows="1" class="note_body" [(ngModel)]="note.body" placeholder="Create note" (focus)="selected = !selected">
+        <textarea rows="1" class="note_body" [(ngModel)]="note.body" placeholder=" Create note" (focus)="selected = !selected">
                 </textarea>
     </div>
 </div>
@@ -28,10 +28,13 @@
         </div>
         <div class="note_bar" [style.visibility]="menu_items_visible['menu_bar_visible']==true?'visible':'hidden'">
             <div class="menu_item " (mouseenter)="showChangerColor()">
-                <img src="/assets/palitra.svg">
+                <img class="menu_icon" src="/assets/palitra.svg">
             </div>
             <div class="menu_item " (mouseenter)="showMenuBar()" (click)="archivateUnarchivate()">
-                <img src="/assets/archive.svg">
+                <img class="menu_icon" src="/assets/archive.svg">
+            </div>
+            <div class="menu_item " (mouseenter)="showMenuBar()" (click)="trashUntrash()">
+                <img class="menu_icon" src="/assets/trash.svg">
             </div>
             <a class="save_button" (click)="commitChanges()">
                 <p>SAVE</p>

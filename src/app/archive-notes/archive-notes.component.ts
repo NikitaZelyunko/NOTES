@@ -4,17 +4,14 @@ import { NoteOrderService } from '../note-order.service';
 import { Note } from '../note';
 import { Router } from '@angular/router';
 
-//import {NoteComponent} from '../note/note.component';
-
 const NOTE_ROUTE_PREFIX = 'note';
 
 @Component({
-  selector: 'app-new-notes',
-  templateUrl: './new-notes.component.html',
-  styleUrls: ['./new-notes.component.css'],
-
+  selector: 'app-archive-notes',
+  templateUrl: './archive-notes.component.html',
+  styleUrls: ['./archive-notes.component.css']
 })
-export class NewNotesComponent implements OnInit {
+export class ArchiveNotesComponent implements OnInit {
 
   notes: any = [];
   menu_items_visible = [];
@@ -37,20 +34,10 @@ export class NewNotesComponent implements OnInit {
   constructor(
     private noteStorageService: NoteStorageService,
     private noteOrderService: NoteOrderService,
-    private routing: Router) {
-  }
-  ngOnInit() {
-    //this.noteStorageService.clear_all();
-    //this.noteOrderService.clear_all();
-    //this.generate_notes(10);
-    this.noteStorageService.eventEmitter.
-      subscribe((id: number) => {
-      let note = this.noteStorageService.get_note(id).toJSON();
-      note['order_num'] = 0;
-      this.notes.splice(0, 0, note);
-      this.add_menu_bar(0);
-    });
-    this.get_new_notes();
+    private routing: Router) { }
+
+   ngOnInit() {
+    this.get_archive_notes();
   }
 
   private init_menu_bar(order_num: number) {
@@ -59,12 +46,7 @@ export class NewNotesComponent implements OnInit {
       'menu_bar_visible': false,
     };
   }
-  private add_menu_bar(order_num: number) {
-    this.menu_items_visible.splice(order_num, 0, {
-      'changer_color_visible': false,
-      'menu_bar_visible': false,
-    });
-  }
+
   private delete_menu_bar(order_num: number) {
     this.menu_items_visible.splice(order_num, 1);
   }
@@ -102,9 +84,6 @@ export class NewNotesComponent implements OnInit {
   }
   */
 
-
-
-
   show_note(order_num: number, event: Event) {
     let class_name = event.target['className'];
     let show = false;
@@ -117,93 +96,19 @@ export class NewNotesComponent implements OnInit {
       this.routing.navigate([NOTE_ROUTE_PREFIX + '/' + this.notes[order_num]['id'].toString()]);
     }
   }
-  get_new_notes() {
-    let arr_id = this.noteOrderService.get_order_list(0);
+  get_archive_notes() {
+    let arr_id = this.noteOrderService.get_order_list(2);
     this.notes = [];
     let note;
     for (let i = 0; i < arr_id.length; i++) {
       note = this.noteStorageService.get_note(arr_id[i]).toJSON();
-      if (note.note_type === 0) {
+      if (note.note_type === 2) {
         note.order_num = i;
         this.notes[i] = note;
         this.init_menu_bar(i);
       }
     }
   }
-  generate_notes(n: number) {
-    n = Math.round(n);
-    const start_symbol = 97; //a
-    const max_step = 25; //97+25=122 = z
-    const max_len = 255;
-    let note;
-    let title = '';
-    let note_type = 0;
-    let body_type = 0;
-    let body = '';
-    let color = '#FFFFFF';
-    let prefix = '';
-    let len = 0;
-
-    for (let i = 0; i < n; i++) {
-      prefix = i.toString();
-      len = Math.round(Math.random() * max_len);
-      title = prefix + this.generate_string(start_symbol, max_step, len);
-      len = Math.round(Math.random() * max_len);
-      body = this.generate_string(start_symbol, max_step, len);
-      note = new Note(
-        i,
-        title,
-        note_type,
-        body_type,
-        body,
-        color);
-      //console.log(note.getId());
-      //console.log('after', this.noteOrderService.get_order_list(note.note_type));
-      this.noteStorageService.create_note(note);
-      this.noteOrderService.setToEnd(note.getId(), note.note_type);
-      //console.log('before', this.noteOrderService.get_order_list(note.note_type));
-    }
-  }
-  generate_string(start_symbol: number, max_step: number, len: number): string {
-    let code_arr: Array<number> = [];
-      for (let i = 0; i < len; i++) {
-        code_arr.push(start_symbol + Math.round(Math.random() * max_step));
-      }
-      return this.from_arr_codes_to_string(code_arr);
-  }
-  from_arr_codes_to_string(code_arr: Array<number>): string {
-    let res_str = '';
-    for (let i = 0; i < code_arr.length; i++) {
-      res_str += String.fromCharCode(code_arr[i]);
-    }
-    return res_str;
-  }
-
-private isEqualByFields(a: object, b: object) {
-    let k_a = Object.keys(a);
-    let k_b = Object.keys(b);
-    if (k_a.length !== k_b.length) {
-        return false;
-    }
-    for (let i = 0; i < k_a.length; i++) {
-        if (k_a[i] !== k_b[i]) {
-            return false;
-        }
-        if (a[k_a[i]] !== b[k_b[i]]) {
-            return false;
-        }
-    }
-    return true;
-}
-private indexOfbyFields(a: object , b: any[]) {
-    //b-array
-    for (let i = 0; i < b.length; i++) {
-        if (this.isEqualByFields(a, b[i])) {
-            return i;
-        }
-    }
-    return -1;
-}
 
 deleteNote(order_num: number) {
   this.notes.splice(order_num, 1);
@@ -271,7 +176,6 @@ fixedUnfixed(order_num: number) {
   this.commitChanges(order_num);
   this.deleteNote(order_num);
 }
-
 trashUntrash(order_num: number) {
   if (this.notes[order_num]['note_type'] !== 3) {
     this.notes[order_num]['note_type'] = 3;
@@ -291,7 +195,7 @@ trashUntrash(order_num: number) {
   this.deleteNote(order_num);
 }
 
-commitChanges(order_num: number) {
+commitChanges(order_num) {
   this.noteStorageService.update_or_create_note(
     Note.fromJSON(this.notes[order_num]));
 }
