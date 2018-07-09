@@ -36,6 +36,15 @@ div.note_end {
     margin: 20px;
 }
 
+div.note_fixed {
+    position: relative;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    top: 5px;
+    left: calc(100% - 25px);
+}
+
 div.note_content {
     position: relative;
     top: 0px;

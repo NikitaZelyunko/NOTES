@@ -19,6 +19,7 @@ import { NoteAddComponent } from './note-add/note-add.component';
 import { ArchiveNotesComponent } from './archive-notes/archive-notes.component';
 import { TrashNotesComponent } from './trash-notes/trash-notes.component';
 import { FixedNotesComponent } from './fixed-notes/fixed-notes.component';
+import { SearchComponent } from './search/search.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { FixedNotesComponent } from './fixed-notes/fixed-notes.component';
     NoteAddComponent,
     ArchiveNotesComponent,
     TrashNotesComponent,
-    FixedNotesComponent
+    FixedNotesComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

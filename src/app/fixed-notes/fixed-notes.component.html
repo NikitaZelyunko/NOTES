@@ -1,3 +1,43 @@
-<p>
-  fixed-notes works!
-</p>
+<div class="dndPlaceholder" #placeholderFixed></div>
+<p *ngIf="notes.length!=0 && show_fixed" class="fixed">FIXED</p>
+<div *ngIf="notes.length!=0" class="wrapper_notes" [dndList]="{
+    allowedTypes: [1]}" [dndPlaceholder]="placeholderFixed" [dndModel]="notes">
+    <div *ngFor="let note of notes" class="note" [ngStyle]="{'background-color': note.color}" [dndType]="note.note_type" (dndMoved)="removeNote(note, notes)" [dndDraggable] [dndObject]="note" (click)="show_note(note.order_num, $event)" (mouseenter)="showMenuBar(note.order_num)"
+        (mouseleave)="hideMenuBar(note.order_num)">
+        <div class="note_fixed" [style.visibility]="menu_items_visible[note.order_num][ 'pin_visible']==true? 'visible': 'hidden' ">
+            <div class="menu_item " (mouseenter)="showMenuBar(note.order_num)" (click)="fixedUnfixed(note.order_num)">
+                <img *ngIf="note.note_type!=1" class="menu_icon" src="/assets/pin_black.png" title="Fixed note">
+                <img *ngIf="note.note_type==1" class="menu_icon" src="/assets/pin_blue.png" title="Unfixed note">
+            </div>
+        </div>
+        <div class=" note_content ">
+            <div class="note_header ">
+                {{note.title}}
+            </div>
+            <div class="note_body ">
+                {{note.body}}
+            </div>
+        </div>
+        <div class="menu_content " [style.visibility]="menu_items_visible[note.order_num][ 'menu_bar_visible']==true? 'visible': 'hidden' ">
+            <div *ngIf="menu_items_visible[note.order_num][ 'changer_color_visible'] " class="changer_color " (mouseleave)="hideChangerColor(note.order_num) ">
+                <div class="set_color " *ngFor="let color of availible_colors ">
+                    <div class="set_color_item " [ngStyle]="{ 'background-color': color} " (click)="changeColor(note.order_num, color) ">
+                        <img *ngIf="note.color==color " class="checked_color " src="/assets/check.jpeg ">
+                    </div>
+                </div>
+            </div>
+            <div class="note_bar ">
+                <div class="menu_item " (mouseenter)="showChangerColor(note[ 'order_num']) ">
+                    <img class="menu_icon" src="/assets/palitra.svg " title="Color">
+                </div>
+                <div class="menu_item " (mouseenter)="showMenuBar(note.order_num) " (click)="archivateUnarchivate(note.order_num) ">
+                    <img class="menu_icon" src="/assets/archive.svg " title="Archivate">
+                </div>
+                <div class="menu_item " (mouseenter)="showMenuBar(note.order_num) " (click)="trashUntrash(note.order_num) ">
+                    <img class="menu_icon" src="/assets/trash.svg " title="To trash">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" note_end "></div>
+</div>

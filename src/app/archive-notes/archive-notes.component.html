@@ -3,6 +3,11 @@
 
     <div *ngFor="let note of notes" class="note" [ngStyle]="{'background-color': note.color}" [dndType]="'note'" (dndMoved)="removeNote(note, notes)" [dndDraggable] [dndObject]="note" (click)="show_note(note.order_num, $event)" (mouseenter)="showMenuBar(note.order_num)"
         (mouseleave)="hideMenuBar(note.order_num)">
+        <div class="note_fixed" [style.visibility]="menu_items_visible[note.order_num][ 'pin_visible']==true? 'visible': 'hidden' ">
+            <div class="menu_item " [ngStyle]="{'background-color': show_note.color}" (mouseenter)="showMenuBar(note.order_num)" (click)="fixedUnfixed(note.order_num)">
+                <img class="menu_icon" src="/assets/pin_black.png">
+            </div>
+        </div>
         <div class=" note_content ">
             <div class="note_header ">
                 {{note.title}}

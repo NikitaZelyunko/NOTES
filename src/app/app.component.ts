@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter} from '@angular/core';
 import { trigger, state, style, animate, transition, group } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,10 @@ export class AppComponent {
   title = 'app';
   menu_show = 'menu_hide';
   @Output() createNote: EventEmitter<number> = new EventEmitter<number>();
+
+  constructor (public router: Router) {
+    
+  }
 
 showMenu(event: MouseEvent) {
   this.createNote.emit(1);

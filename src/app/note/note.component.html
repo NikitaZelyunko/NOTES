@@ -20,7 +20,13 @@
                 (blur)="showDefaultNoteHeader()">
                 </textarea>-->
 
-<div *ngIf="show_note" class="note" [ngStyle]="{'background-color': show_note.color}" (mouseleave)="hideChangerColor();">
+<div *ngIf="show_note.getId() !== -1" class="note" [ngStyle]="{'background-color': show_note.color}" (mouseleave)="hideChangerColor();">
+    <div class="note_fixed">
+        <div class="menu_item " [ngStyle]="{'background-color': show_note.color}" (mouseenter)="showMenuBar()" (click)="fixedUnfixed()">
+            <img *ngIf="show_note.note_type!=1" class="menu_icon" src="/assets/pin_black.png">
+            <img *ngIf="show_note.note_type==1" class="menu_icon" src="/assets/pin_blue.png">
+        </div>
+    </div>
     <div class="note_content">
         <div class="wrapper_for_hidden_scroll">
             <textarea rows="6" [ngStyle]="{'background-color': show_note.color}" [(ngModel)]="show_note.title" class="note_header" placeholder="Title">

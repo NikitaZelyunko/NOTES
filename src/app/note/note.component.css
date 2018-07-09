@@ -11,12 +11,22 @@ div.note {
     width: 600px;
     word-wrap: break-word;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+    padding: 0 10px 0 10px;
 }
 
 div.note_end {
     width: 240px;
     word-wrap: break-word;
     margin: 20px;
+}
+
+div.note_fixed {
+    position: relative;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    top: 5px;
+    left: calc(100% - 25px);
 }
 
 div.note_content {

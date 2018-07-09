@@ -1,0 +1,147 @@
+div.wrapper_notes {
+    position: relative;
+    width: calc( (240px + 40px) * 5);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: flex-start;
+    height: 100%;
+    left: calc(50% - (700px + 100px));
+    padding: 0 10px 0 10px;
+    /*width: 1200px;
+    display: grid;
+    grid-template-columns: 240px 240px 240px 240px 240px;
+    grid-template-rows: auto auto auto auto auto;
+    grid-auto-flow: row;
+    */
+}
+
+p.fixed {
+    display: block;
+    position: relative;
+    left: 165px;
+}
+
+div.dndPlaceholder {
+    width: 240px;
+    margin: 20px;
+}
+
+div.note {
+    position: relative;
+    width: 240px;
+    word-wrap: break-word;
+    margin: 20px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
+}
+
+div.note_end {
+    width: 240px;
+    word-wrap: break-word;
+    margin: 20px;
+    height: 100px;
+}
+
+div.note_fixed {
+    position: relative;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    top: 5px;
+    left: calc(100% - 25px);
+}
+
+div.note_content {
+    position: relative;
+    top: 0px;
+    font-size: 16px;
+    margin: 0 0 40px 0;
+}
+
+.note_header {
+    position: relative;
+    font-weight: bold;
+    padding: 10px 10px 10px 10px;
+}
+
+.note_body {
+    position: relative;
+    padding: 0 10px 10px 10px;
+}
+
+div.note_bar {
+    width: 100%;
+    height: 25px;
+    position: absolute;
+    bottom: 0px;
+}
+
+div.menu_content {
+    position: absolute;
+    width: 100%;
+    height: 25px;
+    bottom: 0px;
+}
+
+div.menu_item {
+    position: relative;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    padding: 0 0 0 5px;
+    vertical-align: top;
+    opacity: 0.4;
+}
+
+div.menu_item:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+img.menu_icon {
+    width: 18px;
+    height: 18px;
+}
+
+div.changer_color {
+    position: absolute;
+    width: 144px;
+    height: 115px;
+    bottom: 30px;
+    left: 1px;
+    padding: 0 10px 20px 5px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+}
+
+div.set_color {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    margin: 10px 0 0 5px;
+    border-radius: 50%;
+    border: 3px solid white;
+    display: inline-block;
+}
+
+div.set_color_item {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    left: -1px;
+    top: -1px;
+    border-radius: 50%;
+    border: 1px solid gray;
+}
+
+div.set_color:hover {
+    border-color: gray;
+}
+
+img.checked_color {
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    border-radius: 50%;
+}

@@ -7,6 +7,45 @@
             background-color: yellow;
         }
         
+        div.route {
+            font-size: 20px;
+            display: inline-block;
+            height: 100%;
+            vertical-align: top;
+        }
+        
+        .route p {
+            margin: 25px 0 0 0;
+        }
+        
+        div.search_box {
+            height: 50px;
+            width: 700px;
+            display: inline-block;
+            vertical-align: top;
+            margin: 10px 0 0 40px;
+            background-color: white;
+            border-radius: 8px;
+        }
+        
+        .search_box input {
+            border: 0 none white;
+            height: 40px;
+            font-size: 20px;
+            width: calc(100% - 105px);
+            margin: 5px 0 0 10px;
+            vertical-align: top;
+        }
+        
+        .search_box img {
+            margin: 10px 0 0 10px;
+            height: 30px;
+        }
+        
+        .search_box img:hover {
+            cursor: pointer;
+        }
+        
         div.wrapper {
             position: absolute;
             top: 70px;
@@ -20,9 +59,47 @@
             top: 70px;
             left: -200px;
             width: 200px;
-            background-color: red;
+            background-color: rgb(233, 233, 233);
             height: 100%;
             display: inline-block;
+        }
+        
+        .menu_item {
+            display: block;
+            width: 200px;
+            height: 40px;
+            font-size: 0;
+            position: relative;
+        }
+        
+        div.menu_item_content {
+            width: 100%;
+            height: 100%;
+            margin: 0 0 20px 0;
+            padding: 2px 0 0 10px;
+        }
+        
+        div.menu_item_icon {
+            display: inline-block;
+            height: 40px;
+            width: 40px;
+        }
+        
+        img.menu_icon {
+            height: 20px;
+            position: absolute;
+            bottom: 0;
+        }
+        
+        div.menu_link {
+            display: inline-block;
+            bottom: 0;
+            font-size: 16px;
+            position: absolute;
+        }
+        
+        div.menu_item :hover {
+            background-color: rgb(192, 192, 192);
         }
         
         div.show_menu_button {
@@ -30,6 +107,7 @@
             top: 0;
             width: 60px;
             height: 100%;
+            display: inline-block;
         }
         
         div.menu_image {

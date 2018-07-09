@@ -5,9 +5,58 @@
             <img class="menu_image" src="/assets/menu.svg" (click)="showMenu($event)">
         </div>
     </div>
+    <div class="route">
+        <p>{{router.routerState.snapshot.url.slice(1).toUpperCase()}}</p>
+    </div>
+    <div class="search_box">
+        <img src="/assets/search.png">
+        <input placeholder="Search">
+        <img src="/assets/x.png">
+    </div>
 </div>
 <div class=" wrapper ">
-    <div class="menu " [@selected]="menu_show"></div>
+    <div class="menu " [@selected]="menu_show">
+        <div class="menu_item" routerLink="/new_notes">
+            <div class="menu_item_content">
+                <div class="menu_item_icon">
+                    <img class="menu_icon" src="/assets/note.png">
+                </div>
+                <div class="menu_link">
+                    <p>Notes</p>
+                </div>
+            </div>
+        </div>
+        <div class="menu_item" routerLink="/archive">
+            <div class="menu_item_content">
+                <div class="menu_item_icon">
+                    <img class="menu_icon" src="/assets/archive.svg">
+                </div>
+                <div class="menu_link">
+                    <p>Archive</p>
+                </div>
+            </div>
+        </div>
+        <div class="menu_item" routerLink="/fixed">
+            <div class="menu_item_content">
+                <div class="menu_item_icon">
+                    <img class="menu_icon" src="/assets/pin_black.png">
+                </div>
+                <div class="menu_link">
+                    <p>Fixed</p>
+                </div>
+            </div>
+        </div>
+        <div class="menu_item" routerLink="/trash">
+            <div class="menu_item_content">
+                <div class="menu_item_icon">
+                    <img class="menu_icon" src="/assets/trash.svg">
+                </div>
+                <div class="menu_link">
+                    <p>Trash</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="content ">
 
         <div class="notes">

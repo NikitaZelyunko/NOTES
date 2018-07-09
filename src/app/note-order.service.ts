@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { NoteStorageService } from './note-storage.service';
-import { ReturnStatement } from '@angular/compiler';
 import { Note } from './note';
 //import { Note } from './note';
 const PREF_KEY = 'order';
@@ -13,6 +12,11 @@ enum note_types {NEW= 0, FIXED= 1, ARCHIVE= 2, TRASH= 3}
 export class NoteOrderService {
 
   private storage: Storage;
+  updateNew: EventEmitter<number> = new EventEmitter<number>();
+  updateFixed: EventEmitter<number> = new EventEmitter<number>();
+  updateArchive: EventEmitter<number> = new EventEmitter<number>();
+  updateTrash: EventEmitter<number> = new EventEmitter<number>();
+
 
   constructor(private noteStorageService: NoteStorageService) {
     this.storage = window.localStorage;
@@ -71,28 +75,55 @@ export class NoteOrderService {
     if (old_type === note_types.NEW) {
       return true;
     }
-    return this.transferNote(id, old_type, note_types.NEW, order_num);
+    if (this.transferNote(id, old_type, note_types.NEW, order_num)) {
+      this.updateNew.emit(id);
+      return true;
+    }
+    return false;
   }
   toArchive(id: number, order_num: number): boolean {
     let old_type = this.getType(id);
     if (old_type === note_types.ARCHIVE) {
       return true;
     }
-    return this.transferNote(id, old_type, note_types.ARCHIVE, order_num);
+    if (this.transferNote(id, old_type, note_types.ARCHIVE, order_num)) {
+      this.updateArchive.emit(id);
+      return true;
+    }
+    return false;
   }
   toFixed(id: number, order_num: number): boolean {
     let old_type = this.getType(id);
     if (old_type === note_types.FIXED) {
       return true;
     }
-    return this.transferNote(id, old_type, note_types.FIXED, order_num);
+    if (this.transferNote(id, old_type, note_types.FIXED, order_num)) {
+      this.updateFixed.emit(id);
+      return true;
+    }
+    return false;
   }
   toTrash(id: number, order_num: number): boolean {
     let old_type = this.getType(id);
     if (old_type === note_types.TRASH) {
       return true;
     }
-    return this.transferNote(id, old_type, note_types.TRASH, order_num);
+    if (this.transferNote(id, old_type, note_types.TRASH, order_num)) {
+      this.updateTrash.emit(id);
+      return true;
+    }
+    return false;
+  }
+  delete(id: number): boolean {
+    let type = this.getType(id);
+    if (type !== -1) {
+      let order_list = this.get_order_list(type);
+      let order_num  = order_list.indexOf(id);
+      order_list.splice(order_num, 1);
+      this.update_order_list(order_list, type);
+      return true;
+    }
+    return false;
   }
   private transferNote(id: number, old_type: note_types, new_type: note_types, order_num: number): boolean {
     if (note_types[new_type] === undefined) {

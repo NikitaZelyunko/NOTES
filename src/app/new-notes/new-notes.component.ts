@@ -38,6 +38,7 @@ export class NewNotesComponent implements OnInit {
     private noteStorageService: NoteStorageService,
     private noteOrderService: NoteOrderService,
     private routing: Router) {
+
   }
   ngOnInit() {
     //this.noteStorageService.clear_all();
@@ -50,6 +51,14 @@ export class NewNotesComponent implements OnInit {
       this.notes.splice(0, 0, note);
       this.add_menu_bar(0);
     });
+    this.noteOrderService.updateNew.
+    subscribe((id: number) => {
+    console.log(id, 'new');
+    let note = this.noteStorageService.get_note(id).toJSON();
+    note['order_num'] = 0;
+    this.notes.splice(0, 0, note);
+    this.add_menu_bar(0);
+  });
     this.get_new_notes();
   }
 
@@ -57,12 +66,14 @@ export class NewNotesComponent implements OnInit {
     this.menu_items_visible[order_num] = {
       'changer_color_visible': false,
       'menu_bar_visible': false,
+      'pin_visible': false
     };
   }
   private add_menu_bar(order_num: number) {
     this.menu_items_visible.splice(order_num, 0, {
       'changer_color_visible': false,
       'menu_bar_visible': false,
+      'pin_visible': false
     });
   }
   private delete_menu_bar(order_num: number) {
@@ -217,9 +228,11 @@ showMenuBar(order_num: number) {
   //cкрываем элементы меню которые хотим
   this.setAllValues(this.menu_items_visible[order_num], keys, false);
   this.menu_items_visible[order_num]['menu_bar_visible'] = true;
+  this.menu_items_visible[order_num]['pin_visible'] = true;
 }
 hideMenuBar(order_num: number) {
-  this.menu_items_visible[order_num]['menu_bar_visible'] = false;
+  let keys = Object.keys(this.menu_items_visible[order_num]);
+  this.setAllValues(this.menu_items_visible[order_num], keys, false);
 }
 showChangerColor(order_num: number) {
   let keys = Object.keys(this.menu_items_visible[order_num]);
@@ -238,6 +251,7 @@ changeColor(order_num: number, color: string) {
 archivateUnarchivate(order_num: number) {
   if (this.notes[order_num]['note_type'] !== 2) {
     this.notes[order_num]['note_type'] = 2;
+    this.commitChanges(order_num);
     this.noteOrderService.toArchive(
       this.notes[order_num]['id'],
       0
@@ -245,17 +259,18 @@ archivateUnarchivate(order_num: number) {
   }
   else {
     this.notes[order_num]['note_type'] = 0;
+    this.commitChanges(order_num);
     this.noteOrderService.toNew(
       this.notes[order_num]['id'],
       0
     );
   }
-  this.commitChanges(order_num);
   this.deleteNote(order_num);
 }
 fixedUnfixed(order_num: number) {
   if (this.notes[order_num]['note_type'] !== 1) {
     this.notes[order_num]['note_type'] = 1;
+    this.commitChanges(order_num);
     this.noteOrderService.toFixed(
       this.notes[order_num]['id'],
       0
@@ -263,18 +278,19 @@ fixedUnfixed(order_num: number) {
   }
   else {
     this.notes[order_num]['note_type'] = 0;
+    this.commitChanges(order_num);
     this.noteOrderService.toNew(
       this.notes[order_num]['id'],
       0
     );
   }
-  this.commitChanges(order_num);
   this.deleteNote(order_num);
 }
 
 trashUntrash(order_num: number) {
   if (this.notes[order_num]['note_type'] !== 3) {
     this.notes[order_num]['note_type'] = 3;
+    this.commitChanges(order_num);
     this.noteOrderService.toTrash(
       this.notes[order_num]['id'],
       0
@@ -282,12 +298,12 @@ trashUntrash(order_num: number) {
   }
   else {
     this.notes[order_num]['note_type'] = 0;
+    this.commitChanges(order_num);
     this.noteOrderService.toNew(
       this.notes[order_num]['id'],
       0
     );
   }
-  this.commitChanges(order_num);
   this.deleteNote(order_num);
 }
 

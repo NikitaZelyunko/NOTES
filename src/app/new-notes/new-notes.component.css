@@ -10,6 +10,12 @@
     position: relative;
 }
 
+p.fixed {
+    display: block;
+    position: relative;
+    left: 165px;
+}
+
 div.wrapper_notes {
     position: relative;
     width: calc( (240px + 40px) * 5);
@@ -20,6 +26,7 @@ div.wrapper_notes {
     align-content: flex-start;
     height: 100%;
     left: calc(50% - (700px + 100px));
+    padding: 0 10px 0 10px;
     /*width: 1200px;
     display: grid;
     grid-template-columns: 240px 240px 240px 240px 240px;
@@ -45,6 +52,15 @@ div.note_end {
     width: 240px;
     word-wrap: break-word;
     margin: 20px;
+}
+
+div.note_fixed {
+    position: relative;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    top: 5px;
+    left: calc(100% - 25px);
 }
 
 div.note_content {
