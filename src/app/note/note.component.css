@@ -7,7 +7,7 @@
 div.note {
     position: absolute;
     top: 20px;
-    left: calc(50% - (300px + 100px));
+    left: calc(50% - (300px + 135px));
     width: 600px;
     word-wrap: break-word;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .2);

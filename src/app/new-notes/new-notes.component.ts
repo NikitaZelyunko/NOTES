@@ -53,7 +53,6 @@ export class NewNotesComponent implements OnInit {
     });
     this.noteOrderService.updateNew.
     subscribe((id: number) => {
-    console.log(id, 'new');
     let note = this.noteStorageService.get_note(id).toJSON();
     note['order_num'] = 0;
     this.notes.splice(0, 0, note);

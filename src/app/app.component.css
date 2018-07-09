@@ -18,14 +18,25 @@
             margin: 25px 0 0 0;
         }
         
+        .route img {
+            margin: 15px 0 0 15px;
+            height: 40px;
+        }
+        
+        .route img:hover {
+            cursor: pointer;
+        }
+        
         div.search_box {
             height: 50px;
             width: 700px;
+            position: absolute;
             display: inline-block;
             vertical-align: top;
-            margin: 10px 0 0 40px;
+            margin: 10px 0 0 0;
             background-color: white;
             border-radius: 8px;
+            left: calc(50% - (350px + 35px));
         }
         
         .search_box input {

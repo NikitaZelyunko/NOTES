@@ -1,3 +1,40 @@
-<p>
-  search works!
-</p>
+<div class="wrapper_notes">
+
+    <div *ngFor="let note of notes" class="note" [ngStyle]="{'background-color': note.color}" (click)="show_note(note.id, $event)" (mouseenter)="showMenuBar(note.id)" (mouseleave)="hideMenuBar(note.id)">
+        <div class="note_fixed" [style.visibility]="menu_items_visible[note.id][ 'pin_visible']==true? 'visible': 'hidden' ">
+            <div class="menu_item " [ngStyle]="{'background-color': note.color}" (mouseenter)="showMenuBar(note.id)" (click)="fixedUnfixed(note)">
+                <img *ngIf="note.note_type!=1" class="menu_icon" src="/assets/pin_black.png" title="Fixed note">
+                <img *ngIf="note.note_type==1" class="menu_icon" src="/assets/pin_blue.png" title="Unfixed note">
+            </div>
+        </div>
+        <div class=" note_content ">
+            <div class="note_header ">
+                <span *ngFor="let piece of search_res[note.id].title" [style.color]="piece.match?'red':'black'">{{piece.str}}</span>
+            </div>
+            <div class="note_body ">
+                <span *ngFor="let piece of search_res[note.id].body" [style.color]="piece.match?'red':'black'">{{piece.str}}</span>
+            </div>
+        </div>
+        <div class="menu_content " [style.visibility]="menu_items_visible[note.id][ 'menu_bar_visible']==true? 'visible': 'hidden' ">
+            <div *ngIf="menu_items_visible[note.id][ 'changer_color_visible'] " class="changer_color " (mouseleave)="hideChangerColor(note.id) ">
+                <div class="set_color " *ngFor="let color of availible_colors ">
+                    <div class="set_color_item " [ngStyle]="{ 'background-color': color} " (click)="changeColor(note, color) ">
+                        <img *ngIf="note.color==color " class="checked_color " src="/assets/check.jpeg ">
+                    </div>
+                </div>
+            </div>
+            <div class="note_bar ">
+                <div class="menu_item " (mouseenter)="showChangerColor(note[ 'id']) ">
+                    <img class="menu_icon" src="/assets/palitra.svg " title="Color">
+                </div>
+                <div class="menu_item " (mouseenter)="showMenuBar(note.id) " (click)="archivateUnarchivate(note) ">
+                    <img class="menu_icon" src="/assets/archive.svg " title="Archivate">
+                </div>
+                <div class="menu_item " (mouseenter)="showMenuBar(note.id) " (click)="trashUntrash(note) ">
+                    <img class="menu_icon" src="/assets/trash.svg " title="To trash">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -6,52 +6,53 @@
         </div>
     </div>
     <div class="route">
-        <p>{{router.routerState.snapshot.url.slice(1).toUpperCase()}}</p>
+        <p *ngIf="(!router.routerState.snapshot.url.startsWith('/search')) && (!router.routerState.snapshot.url.startsWith('/note'))">{{router.routerState.snapshot.url.slice(1).toUpperCase()}}</p>
+        <img *ngIf="router.routerState.snapshot.url.startsWith('/search')" src="/assets/back.png" (click)="goBack()">
     </div>
-    <div class="search_box">
-        <img src="/assets/search.png">
-        <input placeholder="Search">
-        <img src="/assets/x.png">
+    <div class=" search_box ">
+        <img id="search_icon" src="/assets/search.png " (click)=showSearch()>
+        <input placeholder="Search " [(ngModel)]="search_string " (keypress)=searchNotes($event) (click)=showSearch()>
+        <img [style.visibility]="search_string.length==0? 'hidden': 'visible' " src="/assets/x.png " (click)="search_string=''">
     </div>
 </div>
-<div class=" wrapper ">
+<div class="wrapper ">
     <div class="menu " [@selected]="menu_show">
-        <div class="menu_item" routerLink="/new_notes">
-            <div class="menu_item_content">
-                <div class="menu_item_icon">
-                    <img class="menu_icon" src="/assets/note.png">
+        <div class="menu_item " routerLink="/new_notes">
+            <div class="menu_item_content ">
+                <div class="menu_item_icon ">
+                    <img class="menu_icon " src="/assets/note.png ">
                 </div>
-                <div class="menu_link">
+                <div class="menu_link ">
                     <p>Notes</p>
                 </div>
             </div>
         </div>
-        <div class="menu_item" routerLink="/archive">
-            <div class="menu_item_content">
-                <div class="menu_item_icon">
-                    <img class="menu_icon" src="/assets/archive.svg">
+        <div class="menu_item " routerLink="/archive">
+            <div class="menu_item_content ">
+                <div class="menu_item_icon ">
+                    <img class="menu_icon " src="/assets/archive.svg ">
                 </div>
-                <div class="menu_link">
+                <div class="menu_link ">
                     <p>Archive</p>
                 </div>
             </div>
         </div>
-        <div class="menu_item" routerLink="/fixed">
-            <div class="menu_item_content">
-                <div class="menu_item_icon">
-                    <img class="menu_icon" src="/assets/pin_black.png">
+        <div class="menu_item " routerLink="/fixed">
+            <div class="menu_item_content ">
+                <div class="menu_item_icon ">
+                    <img class="menu_icon " src="/assets/pin_black.png ">
                 </div>
-                <div class="menu_link">
+                <div class="menu_link ">
                     <p>Fixed</p>
                 </div>
             </div>
         </div>
-        <div class="menu_item" routerLink="/trash">
-            <div class="menu_item_content">
-                <div class="menu_item_icon">
-                    <img class="menu_icon" src="/assets/trash.svg">
+        <div class="menu_item " routerLink="/trash">
+            <div class="menu_item_content ">
+                <div class="menu_item_icon ">
+                    <img class="menu_icon " src="/assets/trash.svg ">
                 </div>
-                <div class="menu_link">
+                <div class="menu_link ">
                     <p>Trash</p>
                 </div>
             </div>
@@ -59,7 +60,7 @@
     </div>
     <div class="content ">
 
-        <div class="notes">
+        <div class="notes ">
             <router-outlet></router-outlet>
         </div>
     </div>

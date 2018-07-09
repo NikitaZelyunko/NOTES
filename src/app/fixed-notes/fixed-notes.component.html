@@ -11,11 +11,9 @@
             </div>
         </div>
         <div class=" note_content ">
-            <div class="note_header ">
-                {{note.title}}
+            <div class="note_header ">{{note.title}}
             </div>
-            <div class="note_body ">
-                {{note.body}}
+            <div class="note_body ">{{note.body}}
             </div>
         </div>
         <div class="menu_content " [style.visibility]="menu_items_visible[note.order_num][ 'menu_bar_visible']==true? 'visible': 'hidden' ">

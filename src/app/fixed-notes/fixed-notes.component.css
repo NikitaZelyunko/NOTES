@@ -61,12 +61,28 @@ div.note_content {
 
 .note_header {
     position: relative;
+    right: 0;
     font-weight: bold;
+    width: 100%;
+    resize: none;
+    margin: 5px 0 0 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    border-width: 0;
+    font-size: 16px;
+    padding: 0px;
     padding: 10px 10px 10px 10px;
 }
 
 .note_body {
     position: relative;
+    width: 100%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border-width: 0;
+    padding: 0px;
+    font-size: 16px;
     padding: 0 10px 10px 10px;
 }
 

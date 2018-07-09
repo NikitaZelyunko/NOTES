@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Note } from './note';
+import { not } from '@angular/compiler/src/output/output_ast';
 const PREF_KEY = 'note';
 
 @Injectable({
@@ -132,5 +133,54 @@ export class NoteStorageService {
   }
   clear_all() {
     this.storage.clear();
+  }
+
+  searchNote(search_string: string, filters: object): Array<any> {
+    let n = this.get_count_notes();
+    let keys = this.get_id_notes(n);
+    let arr_id = [];
+    let id = 0;
+    for (let i = 0; i < keys.length; i++) {
+      id = parseInt(keys[i], 10);
+      arr_id[id] = id;
+    }
+    let notes = this.get_notes(arr_id);
+    let template = new RegExp(search_string, 'gi');
+    let matches;
+    let unmatches;
+    let res = [];
+    for (let i = 0; i < notes.length; i++) {
+      res[i] = {title: [], body: []};
+      matches = notes[i].title.match(template);
+      if (matches !== null) {
+        res[i].title = matches;
+        unmatches = notes[i].title.split(template);
+        //console.log('concat', this.generate_result_string_for_search(matches, unmatches));
+        //del this
+        res[i].title = this.generate_result_string_for_search(matches, unmatches);
+      }
+      if (notes[i].body_type === 0) {
+        matches = notes[i].body.match(template);
+        unmatches = notes[i].body.split(template);
+      }
+      if (matches !== null) {
+        res[i].body = matches;
+        //del this
+        res[i].body = this.generate_result_string_for_search(matches, unmatches);
+      }
+    }
+    return res;
+  }
+
+  private generate_result_string_for_search(match: Array<string>, unmatch: Array<string>) {
+    let res = [];
+      if (unmatch[0] !== ''){
+        res.push({'str': unmatch[0], 'match': false});
+      }
+      for (let i = 0; i < match.length; i++) {
+        res.push({'str': match[i], 'match': true});
+        res.push({'str': unmatch[i + 1], 'match': false});
+      }
+      return res;
   }
 }

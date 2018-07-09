@@ -2,12 +2,12 @@ enum body_types {TEXT= 0, LIST= 1}
 enum note_types {NEW= 0, FIXED= 1, ARCHIVE= 2, TRASH= 3}
 
 export class Note {
-    private id;
-    title;
-    note_type;
-    body_type;
-    body;
-    color;
+    private id: number;
+    title: string;
+    note_type: number;
+    body_type: number;
+    body: any;
+    color: string;
 
     constructor
     (
