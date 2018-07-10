@@ -26,7 +26,6 @@
     "core-js": "^2.5.4",
     "masonry-layout": "^4.2.1",
     "ng-contenteditable": "^1.0.5",
-    "ngx-drag-and-drop-lists": "^1.1.9",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },
