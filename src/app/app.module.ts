@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgModule } from '@angular/core';
-import { DndListModule} from 'ngx-drag-and-drop-lists';
+import { DndListModule} from '../ngx-drag-and-drop-lists';
 
 import { NoteStorageService } from './note-storage.service';
 import { NoteOrderService } from './note-order.service';

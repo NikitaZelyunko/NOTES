@@ -1,0 +1,58 @@
+{
+  "_from": "ngx-drag-and-drop-lists",
+  "_id": "ngx-drag-and-drop-lists@1.1.9",
+  "_inBundle": false,
+  "_integrity": "sha512-rpxgWW/9LY5op7os9bAcCd9l1bLSpKjEPZj2GzBpyr+E3xe2/XCDyKOKxxB9k17mGrUz1aWUftVKvcHt15Gmkg==",
+  "_location": "/ngx-drag-and-drop-lists",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "ngx-drag-and-drop-lists",
+    "name": "ngx-drag-and-drop-lists",
+    "escapedName": "ngx-drag-and-drop-lists",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ngx-drag-and-drop-lists/-/ngx-drag-and-drop-lists-1.1.9.tgz",
+  "_shasum": "ba5dfb6347e2503a27f8ce5b30c542c3f9011997",
+  "_spec": "ngx-drag-and-drop-lists",
+  "_where": "/home/nikita/TestZad/NOTES",
+  "author": {
+    "name": "Misha Tarnortusky"
+  },
+  "bugs": {
+    "url": "https://github.com/misha130/ngx-drag-and-drop-lists/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "angular drag and drop component for lists",
+  "homepage": "https://github.com/misha130/ngx-drag-and-drop-lists#readme",
+  "keywords": [
+    "drag-and-drop",
+    "angular2",
+    "angular4",
+    "alignment"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "ngx-drag-and-drop-lists",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misha130/ngx-drag-and-drop-lists.git"
+  },
+  "scripts": {
+    "build": "npm run ngc && node ./scripts/copy-package",
+    "dev": "tsc --watch",
+    "ngc": "ngc",
+    "postinstall": "tsc",
+    "publishPackage": "npm run build && cd dist && npm publish"
+  },
+  "version": "1.1.9"
+}
